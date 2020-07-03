@@ -17,7 +17,6 @@ imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.n
 
 @app.route('/')
 @app.route('/home')
-@login_required
 def home():
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
@@ -28,7 +27,6 @@ def home():
     )
 
 @app.route('/new_post', methods=['GET', 'POST'])
-@login_required
 def new_post():
     form = PostForm(request.form)
     if form.validate_on_submit():
@@ -44,7 +42,6 @@ def new_post():
 
 
 @app.route('/post/<int:id>', methods=['GET', 'POST'])
-@login_required
 def post(id):
     post = Post.query.get(int(id))
     form = PostForm(formdata=request.form, obj=post)
